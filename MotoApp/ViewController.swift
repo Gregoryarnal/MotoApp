@@ -48,7 +48,7 @@ class ViewController: UIViewController {
                     let textLabeltxtTop = "On t'a volé ta moto, y'a quelqu'un qui sait conduire dessus !!!"
                     
                     if (degrees < 0){
-                        degrees = (270+degrees)
+                        degrees = 90 - (270+degrees)
                     }
                    
                     if (degrees >= 0){
