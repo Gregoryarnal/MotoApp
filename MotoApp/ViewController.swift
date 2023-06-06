@@ -5,6 +5,8 @@ class ViewController: UIViewController {
 
     let motionManager = CMMotionManager()
     @IBOutlet weak var angleLabel: UILabel!
+//    @IBOutlet weak var angleLabel: UILabel!
+    @IBOutlet weak var textLabel: UILabel!
 
     
     override func viewDidLoad() {
@@ -31,7 +33,7 @@ class ViewController: UIViewController {
         }
         
         if motionManager.isDeviceMotionAvailable {
-            motionManager.deviceMotionUpdateInterval = 0.2
+            motionManager.deviceMotionUpdateInterval = 0.5
             motionManager.startDeviceMotionUpdates(to: OperationQueue.current!) { (data, error) in
                 if let deviceMotion = data {
                     let attitude = deviceMotion.attitude
@@ -40,18 +42,29 @@ class ViewController: UIViewController {
 
                     let rotation = atan2(gravity.x,gravity.z) - .pi / 2.0
                     var degrees = rotation * (180.0 / .pi)
-                    var angle = ""
+
+                    let textLabeltxtBof = "Même ma grand mère penche plus !"
+                    let textLabeltxtBien = "Pas mal !"
+                    let textLabeltxtTop = "On t'a volé ta moto, y'a quelqu'un qui sait conduire dessus !!!"
                     
                     if (degrees < 0){
                         degrees = (270+degrees)
-                        angle = "gauche"
                     }
                    
                     if (degrees >= 0){
                         degrees = -(degrees - 90)
-                        angle = "droite"
                     }
-                    self.angleLabel.text = "Angle d'inclinaison : \(round( degrees * 100) / 100.0) degrés à \(angle)"
+                    
+                    if(degrees < 25){
+                        self.textLabel.text = textLabeltxtBof
+                    }else if (degrees >= 25 && degrees < 45){
+                        self.textLabel.text = textLabeltxtBien
+                    }else if (degrees >= 45){
+                        self.textLabel.text = textLabeltxtTop
+                    }
+                    
+                   
+                    self.angleLabel.text = "Angle \(round( degrees * 100) / 100.0) degrés"
                 }
             }
         }
